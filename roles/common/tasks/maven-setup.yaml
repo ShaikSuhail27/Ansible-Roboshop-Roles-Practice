@@ -1,0 +1,4 @@
+- name: install the maven for setup the javen environment
+  ansible.builtin.yum:
+    name: maven
+    state: installed

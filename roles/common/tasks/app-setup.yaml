@@ -1,0 +1,30 @@
+- name: check whether the user exists or not
+  ansible.builtin.command: id roboshop
+  register: USERID
+
+- name: Create the User
+  ansible.builtin.user:
+    name: roboshop
+  when: USERID.rc != 0
+
+- name: check whether the directory exists or not
+  ansible.builtin.stat:
+    path: /app
+  register: Directory
+
+- name: create the directory
+  ansible.builtin.file:
+    path: /app
+    state: directory
+  when: Directory.stat.exists == false
+
+- name: "Download the {{component}} package"
+  ansible.builtin.get_url:
+    url: "https://roboshop-builds.s3.amazonaws.com/{{component}}.zip"
+    dest: /tmp
+
+ - name: "Extract the {{component}} package into app directory"
+   ansible.builtin.unarchive:
+    src: "/tmp/{{component}}.zip"
+    dest: /app
+  
