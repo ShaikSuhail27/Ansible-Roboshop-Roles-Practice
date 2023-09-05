@@ -24,8 +24,8 @@
     url: "https://roboshop-builds.s3.amazonaws.com/{{component}}.zip"
     dest: /tmp
 
- - name: "Extract the {{component}} package into app directory"
-   ansible.builtin.unarchive:
+- name: "Extract the {{component}} package into app directory"
+  ansible.builtin.unarchive:
     src: "/tmp/{{component}}.zip"
     dest: /app
     remote_src: yes
